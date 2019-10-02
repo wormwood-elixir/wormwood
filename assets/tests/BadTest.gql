@@ -1,0 +1,6 @@
+#import "./does_not_exist.frag.gql"
+{
+  Item {
+    id
+  }
+}
