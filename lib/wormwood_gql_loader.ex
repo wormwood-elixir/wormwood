@@ -11,11 +11,10 @@ defmodule Wormwood.GQLLoader do
   defp graphql_expand_imports(content, file_path) do
     base_dir = Path.dirname(file_path)
     matches = Regex.scan(@import_regex, content)
-    graphql_inject_import_matches(content, matches, base_dir)
+    graphql_inject_import_matches(content, matches, base_dir, file_path)
   end
 
-  @spec graphql_inject_import_matches(binary, [List.t()], binary) :: binary
-  defp graphql_inject_import_matches(content, matches, dir) do
+  defp graphql_inject_import_matches(content, matches, dir, parent_file) do
     case matches do
       [] ->
         content
@@ -23,10 +22,19 @@ defmodule Wormwood.GQLLoader do
         [_, import_path] = List.first(matches)
         content_to_inject = Path.join(dir, import_path)
           |> Path.expand()
-          |> try_load_file()
+          |> try_import_file(parent_file)
 
         content <> content_to_inject
-          |> graphql_inject_import_matches(tl(matches), dir)
+          |> graphql_inject_import_matches(tl(matches), dir, parent_file)
+    end
+  end
+
+  defp try_import_file(import_path, parent_file) do
+    try do
+      try_load_file(import_path)
+    rescue
+      _e in WormwoodError ->
+        raise WormwoodError, "Wormwood failed to load imported file '#{import_path}' imported from file '#{parent_file}'"
     end
   end
 
@@ -36,7 +44,7 @@ defmodule Wormwood.GQLLoader do
         {:ok, file_content} ->
           file_content
         {:error, reason} ->
-          raise WormwoodError, "Wormwood failed to load the file at path: '#{path}' due to: <#{reason}>"
+          raise WormwoodError, "Wormwood failed to load the document at path: '#{path}' due to: <#{reason}>"
       end
   end
 end
