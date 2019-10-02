@@ -1,4 +1,4 @@
-defmodule Wormwood.Test.GQLLoaderValidTest do
+defmodule Wormwood.Test.GQLLoaderTest do
   use ExUnit.Case
   use Wormwood.GQLCase
 

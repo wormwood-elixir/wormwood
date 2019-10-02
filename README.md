@@ -40,7 +40,7 @@ Soon
 	  #...
 	```
 
-4. Your document and schema are ready to go, you can now call `query_gql/1` inside any of your test statements to execute the loaded document against the specified schema. You can pass `options` to this call, please refer to the [Absinthe docs](https://hexdocs.pm/absinthe/Absinthe.html#run/3) for more information on options.
+4. Your document and schema are ready to go, you can now call `query_gql/1` inside any of your test statements to execute the loaded document against the specified schema. You can pass `options` to this call, please refer to the [Absinthe docs](https://hexdocs.pm/absinthe/Absinthe.html#run/3-options) for more information on options.
 
 	For Example:
 	
@@ -54,6 +54,23 @@ Soon
 	
 	#...
 	```
+
+
+##### Full example from the above steps:
+
+```elixir
+defmodule MyCoolApplication.MyTestCase do
+  use ExUnit.Case
+  use Wormwood.GQLCase
+	  
+  load_gql MyCoolApplication.MyAbsintheSchema, "assets/js/queries/MyQuery.gql" 
+	  
+  test "should be a valid query" do
+    result = query_gql(variables: %{}, context: %{:current_user => some_user})
+    assert {:ok, _query_data} = result
+  end
+end
+```
 
 ----------
 

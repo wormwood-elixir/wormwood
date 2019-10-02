@@ -1,0 +1,7 @@
+{
+  Users {
+    id
+    name
+    email
+  }
+}

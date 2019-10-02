@@ -20,7 +20,7 @@ defmodule Wormwood.GQLCase do
     end
   end
 
-  defmacro query_gql(options) do
+  defmacro query_gql(options \\ []) do
     quote do
       Absinthe.run(
         @_wormwood_gql_query,
