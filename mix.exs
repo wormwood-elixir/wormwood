@@ -9,7 +9,11 @@ defmodule Wormwood.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
-      package: package()
+      package: package(),
+      docs: [
+        main: "Wormwood.GQLCase",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -21,7 +25,8 @@ defmodule Wormwood.MixProject do
 
   defp deps do
     [
-      {:absinthe, "~> 1.4"}
+      {:absinthe, "~> 1.4"},
+      {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
     ]
   end
 
