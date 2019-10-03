@@ -16,7 +16,13 @@ defmodule Wormwood.Test.GQLLoaderTest do
 
     test "should raise when trying to import a non-existant fragment" do
       assert_raise WormwoodError, fn ->
-        Wormwood.GQLLoader.load_document("assets/tests/BadTest.gql")
+        Wormwood.GQLLoader.load_document("assets/tests/BadImportTest.gql")
+      end
+    end
+
+    test "should raise when trying to load a file with invalid syntax" do
+      assert_raise WormwoodError, fn ->
+        Wormwood.GQLLoader.load_document("assets/tests/InvalidSyntaxTest.gql")
       end
     end
   end

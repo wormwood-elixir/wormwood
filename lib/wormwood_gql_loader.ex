@@ -5,6 +5,7 @@ defmodule Wormwood.GQLLoader do
   def load_document(document_path) when is_binary(document_path) do
     try_load_file(document_path)
       |> graphql_expand_imports(document_path)
+      |> try_parse_document(document_path)
   end
 
   @spec graphql_expand_imports(binary, binary) :: binary
@@ -38,7 +39,7 @@ defmodule Wormwood.GQLLoader do
     end
   end
 
-  defp try_load_file(path) when is_binary(path) do
+  defp try_load_file(path) do
     File.read(path)
       |> case do
         {:ok, file_content} ->
@@ -46,5 +47,23 @@ defmodule Wormwood.GQLLoader do
         {:error, reason} ->
           raise WormwoodError, "Wormwood failed to load the document at path: '#{path}' due to: <#{reason}>"
       end
+  end
+
+  defp try_parse_document(document, src_path) do
+    case Absinthe.Phase.Parse.run(%Absinthe.Language.Source{body: document}) do
+      {:ok, _parse_result} ->
+        document
+      {:error, blueprint} ->
+        error = blueprint.execution.validation_errors
+          |> List.first()
+
+        error_location = error.locations
+          |> List.first()
+          |> Map.get(:line)
+        raise WormwoodError,
+        "Absinthe couldn't parse the document at path #{src_path} due to:
+        #{error.message}
+        At Line: #{error_location}"
+    end
   end
 end

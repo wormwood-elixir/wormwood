@@ -1,0 +1,7 @@
+{
+  Messages {
+    id
+    content
+    from
+  }
+}

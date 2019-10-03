@@ -19,6 +19,7 @@ defmodule Wormwood.GQLCase do
       end
 
       document = GQLLoader.load_document(unquote(file_path))
+
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
     end
