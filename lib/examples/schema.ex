@@ -12,5 +12,11 @@ defmodule Wormwood.Examples.Schema do
         {:ok, StaticData.users}
       end
     end
+
+    field :messages, list_of(:message) do
+      resolve fn _parent, _args, _resolution ->
+        {:ok, StaticData.messages}
+      end
+    end
   end
 end
