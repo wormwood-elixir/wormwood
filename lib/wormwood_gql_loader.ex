@@ -51,7 +51,7 @@ defmodule Wormwood.GQLLoader do
 
   defp try_parse_document(document, src_path) do
     case Absinthe.Phase.Parse.run(%Absinthe.Language.Source{body: document}) do
-      {:ok, _parse_result} ->
+      {:ok, _blueprint} ->
         document
       {:error, blueprint} ->
         error = blueprint.execution.validation_errors
@@ -63,7 +63,8 @@ defmodule Wormwood.GQLLoader do
         raise WormwoodError,
         "Absinthe couldn't parse the document at path #{src_path} due to:
         #{error.message}
-        At Line: #{error_location}"
+        At Line: #{error_location}
+        (Be sure to check imported documents as well!)"
     end
   end
 end

@@ -10,6 +10,6 @@ defmodule Wormwood.Examples.Types do
   object :message do
     field :id, :id
     field :from, :user
-    field :content, :string
+    field :message, :string
   end
 end

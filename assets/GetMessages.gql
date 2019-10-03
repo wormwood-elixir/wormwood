@@ -1,7 +1,10 @@
 {
   Messages {
     id
-    content
-    from
+    message
+    from {
+      id
+      name
+    }
   }
 }

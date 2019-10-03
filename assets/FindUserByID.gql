@@ -1,0 +1,7 @@
+query FindUserByID($id : Int) {
+  user(id: $id) {
+    id
+    name
+    email
+  }
+}

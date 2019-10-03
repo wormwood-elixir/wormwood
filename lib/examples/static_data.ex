@@ -19,7 +19,8 @@ defmodule Wormwood.Examples.StaticData do
       %{:id => 6, :message => "I'd rather be a bird than a fish.", :from => 2},
       %{:id => 7, :message => "He told us a very exciting adventure story.", :from => 3},
       %{:id => 8, :message => "The lake is a long way from here.", :from => 5},
-      %{:id => 9, :message => "How was the math test?", :from => 5}
+      %{:id => 9, :message => "How was the math test?", :from => 5},
+      %{:id => 1, :message => "Christmas is coming.", :from => 1},
     ]
   end
 end
