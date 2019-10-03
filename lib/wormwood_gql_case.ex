@@ -14,6 +14,10 @@ defmodule Wormwood.GQLCase do
 
   defmacro load_gql(schema, file_path) do
     quote do
+      if Module.get_attribute(unquote(__CALLER__.module), :_wormwood_gql_query) != nil do
+        raise WormwoodError, "You cannot declare two 'load_gql' statements in the same module."
+      end
+
       document = GQLLoader.load_document(unquote(file_path))
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
