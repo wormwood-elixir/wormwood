@@ -55,6 +55,10 @@ defmodule Wormwood.GQLCase do
   """
   defmacro query_gql(options \\ []) do
     quote do
+      if is_nil(@_wormwood_gql_query) do
+        raise WormwoodError, "No GQL document was registered on this module, please check the docs on using the `load_gql`"
+      end
+
       Absinthe.run(
         @_wormwood_gql_query,
         @_wormwood_gql_schema,
