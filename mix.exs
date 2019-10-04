@@ -42,7 +42,9 @@ defmodule Wormwood.MixProject do
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Aaron Shea", "Tinfoil Security Inc."],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/tinfoil/wormwood"}
+      organization: "tinfoil",
+      source_url: "https://github.com/tinfoil/wormwood",
+      links: %{"GitHub" => "https://github.com/tinfoil/wormwood", "Tinfoil Website" => "https://tinfoilsecurity.com"}
     ]
   end
 end

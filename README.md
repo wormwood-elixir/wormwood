@@ -78,4 +78,4 @@ end
 
 Check out `lib/examples/` for a very simple, static, and self contained Absinthe schema. 
 
-You can also dig around in `test/examples` for simple tests that query against that sample schema using Wormwood.
+You can also dig around in `test/examples/` for simple tests that query against that sample schema using Wormwood.
