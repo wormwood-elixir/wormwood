@@ -1,3 +1,3 @@
 defmodule WormwoodError do
-  defexception message: "Wormwoord Error!"
+  defexception message: "Wormwood Error!"
 end
