@@ -1,4 +1,4 @@
-defmodule Wormwood.Test.GQLCaseBadTest do
+defmodule Wormwood.Test.GQLCaseTest do
   use ExUnit.Case
   use Wormwood.GQLCase
 

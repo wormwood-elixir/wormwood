@@ -27,7 +27,7 @@ defmodule Wormwood.GQLCase do
   defmacro load_gql(schema, file_path) do
     quote do
       if Module.get_attribute(unquote(__CALLER__.module), :_wormwood_gql_query) != nil do
-        raise WormwoodError, "You cannot declare two 'load_gql' statements in the same module."
+        raise WormwoodSetupError, reason: :double_declaration
       end
 
       document = GQLLoader.load_document(unquote(file_path))
@@ -56,7 +56,7 @@ defmodule Wormwood.GQLCase do
   defmacro query_gql(options \\ []) do
     quote do
       if is_nil(@_wormwood_gql_query) do
-        raise WormwoodError, "No GQL document was registered on this module, please check the docs on using the `load_gql`"
+        raise WormwoodSetupError, reason: :missing_declaration
       end
 
       Absinthe.run(

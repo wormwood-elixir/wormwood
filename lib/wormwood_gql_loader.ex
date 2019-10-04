@@ -34,8 +34,8 @@ defmodule Wormwood.GQLLoader do
     try do
       try_load_file(import_path)
     rescue
-      _e in WormwoodError ->
-        raise WormwoodError, "Wormwood failed to load imported file '#{import_path}' imported from file '#{parent_file}'"
+      _e in WormwoodLoaderError ->
+        raise WormwoodImportError, path: import_path, parent: parent_file
     end
   end
 
@@ -45,7 +45,7 @@ defmodule Wormwood.GQLLoader do
         {:ok, file_content} ->
           file_content
         {:error, reason} ->
-          raise WormwoodError, "Wormwood failed to load the document at path: '#{path}' due to: <#{reason}>"
+          raise WormwoodLoaderError, path: path, reason: reason
       end
   end
 
@@ -60,11 +60,8 @@ defmodule Wormwood.GQLLoader do
         error_location = error.locations
           |> List.first()
           |> Map.get(:line)
-        raise WormwoodError,
-        "Absinthe couldn't parse the document at path #{src_path} due to:
-        #{error.message}
-        At Line: #{error_location}
-        (Be sure to check imported documents as well!)"
+
+        raise WormwoodParseError, path: src_path, err: error.message, line: error_location
     end
   end
 end
