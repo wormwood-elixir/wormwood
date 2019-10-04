@@ -1,10 +1,7 @@
+#import "./MessageFields.frag.gql"
+
 {
   Messages {
-    id
-    message
-    from {
-      id
-      name
-    }
+    ...MessageFields
   }
 }

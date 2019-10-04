@@ -6,6 +6,7 @@ defmodule Wormwood.Examples.Types do
     field :id, :id
     field :name, :string
     field :email, :string
+    field :messages, list_of(:message)
   end
 
   object :message do

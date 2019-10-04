@@ -1,7 +1,12 @@
+#import "./MessageFields.frag.gql"
+#import "./UserFields.frag.gql"
+
 query FindUserByEmail($email : String) {
   user(email: $email) {
-    id
-    name
-    email
+    ...UserFields
+
+    messages {
+      ...MessageFields
+    }
   }
 }

@@ -16,15 +16,19 @@ defmodule Wormwood.Examples.Schema do
     end
 
     field :messages, list_of(:message) do
-      resolve fn _parent, _args, _resolution ->
-        {:ok, ResolverHelpers.messages_mapped_to_user}
-      end
+      arg :from, :id
+      resolve &ResolverHelpers.messages_mapped_to_user/3
     end
 
     field :user, :user do
       arg :id, :id
       arg :email, :string
       resolve &ResolverHelpers.find_user/3
+    end
+
+    field :message, :message do
+      arg :id, non_null(:id)
+      resolve &ResolverHelpers.get_message/3
     end
   end
 end

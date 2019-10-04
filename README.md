@@ -94,7 +94,7 @@ You can also dig around in `test/examples/` for simple tests that query against 
 
 ### License
 
-Copyright © 2019 [Tinfoil Security Inc.](https://www.tinfoilsecurity.com/go/opensource).
+Copyright © 2019 [Tinfoil Security Inc.](https://www.tinfoilsecurity.com/go/opensource)
 
 This project is [MIT licensed](https://github.com/tinfoil/wormwood/blob/master/LICENSE).
 

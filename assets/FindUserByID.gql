@@ -1,7 +1,12 @@
+#import "./MessageFields.frag.gql"
+#import "./UserFields.frag.gql"
+
 query FindUserByID($id : Int) {
   user(id: $id) {
-    id
-    name
-    email
+    ...UserFields
+
+    messages {
+      ...MessageFields
+    }
   }
 }
