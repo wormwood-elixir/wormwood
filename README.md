@@ -1,5 +1,9 @@
 # Wormwood
 
+[![hex](https://img.shields.io/hexpm/v/wormwood.svg)](https://hex.pm/packages/wormwood)
+[![license-mit](https://img.shields.io/badge/license-MIT-blue)](https://github.com/tinfoil/wormwood/blob/master/LICENSE)
+![graph-ql](https://img.shields.io/badge/%E2%99%A5-graphql-ff69b4)
+
 Wormwood is a tiny library to aid in testing GraphQL queries against an Absinthe schema. It allows you to test your query documents inside ExUnit test modules, and requires no HTTP requests to occur during testing.
 
 #### Why Wormwood?
@@ -14,7 +18,13 @@ That's it!
 
 ### Installation
 
-Soon
+Install from [Hex.pm](https://hex.pm/packages/wormwood):
+
+```elixir
+def deps do
+  [{:wormwood, "~> 1.0.0"}]
+end
+```
 
 ----------
 
@@ -79,3 +89,17 @@ end
 Check out `lib/examples/` for a very simple, static, and self contained Absinthe schema. 
 
 You can also dig around in `test/examples/` for simple tests that query against that sample schema using Wormwood.
+
+----------
+
+### License
+
+Copyright © 2019 [Tinfoil Security Inc.](https://www.tinfoilsecurity.com/go/opensource).
+
+This project is [MIT licensed](https://github.com/tinfoil/wormwood/blob/master/LICENSE).
+
+----------
+
+<p align="center">
+	Made with ❤️ and 🔐 by Tinfoil Security
+</p>

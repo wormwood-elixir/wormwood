@@ -2,9 +2,10 @@ defmodule Wormwood.Test.GQLCaseTest do
   use ExUnit.Case
   use Wormwood.GQLCase
 
-  test "Should raise when no document is registered to the module" do
-    assert_raise WormwoodSetupError, fn ->
-      query_gql()
-    end
+  load_gql Wormwood.Examples.Schema, "assets/GetUsers.gql"
+
+  test "Should execute a valid query" do
+    result = query_gql()
+    assert {:ok, _query_data} = result
   end
 end
