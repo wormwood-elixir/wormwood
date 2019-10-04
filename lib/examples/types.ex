@@ -1,4 +1,5 @@
 defmodule Wormwood.Examples.Types do
+  @moduledoc false
   use Absinthe.Schema.Notation
 
   object :user do

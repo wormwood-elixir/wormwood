@@ -1,4 +1,5 @@
 defmodule Wormwood.Examples.StaticData do
+  @moduledoc false
   def users do
     [
       %{:id => 1, :name => "Foilz", :email => "ilovesecurity@please-dont-email-this.really"},

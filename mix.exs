@@ -11,7 +11,7 @@ defmodule Wormwood.MixProject do
       description: description(),
       package: package(),
       docs: [
-        main: "Wormwood.GQLCase",
+        main: "readme",
         extras: ["README.md"]
       ]
     ]

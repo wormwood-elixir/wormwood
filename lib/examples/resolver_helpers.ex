@@ -1,4 +1,5 @@
 defmodule Wormwood.Examples.ResolverHelpers do
+  @moduledoc false
   alias Wormwood.Examples.StaticData
 
   def messages_mapped_to_user do

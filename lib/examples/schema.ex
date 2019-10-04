@@ -1,4 +1,5 @@
 defmodule Wormwood.Examples.Schema do
+  @moduledoc false
   use Absinthe.Schema
 
   alias Wormwood.Examples.ResolverHelpers
