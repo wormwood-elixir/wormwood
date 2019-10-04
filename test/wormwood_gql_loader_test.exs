@@ -8,13 +8,13 @@ defmodule Wormwood.Test.GQLLoaderTest do
       assert String.contains?(document, "#this is just a test fragment to rest imports")
     end
 
-    test "should raise when trying to load a non-existant file" do
+    test "should raise when trying to load a non-existent file" do
       assert_raise WormwoodError, fn ->
         Wormwood.GQLLoader.load_document("assets/tests/does_not_exist.gql")
       end
     end
 
-    test "should raise when trying to import a non-existant fragment" do
+    test "should raise when trying to import a non-existent fragment" do
       assert_raise WormwoodError, fn ->
         Wormwood.GQLLoader.load_document("assets/tests/BadImportTest.gql")
       end
