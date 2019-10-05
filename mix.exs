@@ -10,6 +10,8 @@ defmodule Wormwood.MixProject do
       deps: deps(),
       description: description(),
       package: package(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       docs: [
         main: "readme",
         extras: ["README.md"]
@@ -26,6 +28,7 @@ defmodule Wormwood.MixProject do
   defp deps do
     [
       {:absinthe, "~> 1.4"},
+      {:excoveralls, "~> 0.10", only: :test},
       {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
     ]
   end
