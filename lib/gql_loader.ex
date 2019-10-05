@@ -24,6 +24,7 @@ defmodule Wormwood.GQLLoader do
         content_to_inject = Path.join(dir, import_path)
           |> Path.expand()
           |> try_import_file(parent_file)
+          |> graphql_expand_imports(import_path)
 
         content <> content_to_inject
           |> graphql_inject_import_matches(tl(matches), dir, parent_file)
