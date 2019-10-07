@@ -30,7 +30,7 @@ defmodule Wormwood.GQLCase do
         raise WormwoodSetupError, reason: :double_declaration
       end
 
-      document = GQLLoader.load_file(unquote(file_path))
+      document = GQLLoader.load_file!(unquote(file_path))
 
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
@@ -56,7 +56,7 @@ defmodule Wormwood.GQLCase do
         raise WormwoodSetupError, reason: :double_declaration
       end
 
-      document = GQLLoader.load_string(unquote(query_string))
+      document = GQLLoader.load_string!(unquote(query_string))
 
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
