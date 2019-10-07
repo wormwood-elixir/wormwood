@@ -16,7 +16,6 @@ defmodule Wormwood.Examples.Schema do
     end
 
     field :messages, list_of(:message) do
-      arg :from, :id
       resolve &ResolverHelpers.messages_mapped_to_user/3
     end
 

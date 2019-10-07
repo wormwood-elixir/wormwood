@@ -38,7 +38,7 @@ defmodule Wormwood.GQLCase do
   end
 
   @doc """
-  Call this macro in the module
+  Call this macro in the module where you want to query using a static string as your query.
 
   It takes 2 arguments, the first is your Absinthe schema module, the second is a string of a GQL query or mutation.
   This still supports imports, they will be resolved from the current working directory. (Most likely the top level of your app)
@@ -46,7 +46,7 @@ defmodule Wormwood.GQLCase do
   For example:
   ```elixir
   defmodule MyCoolApplication.MyModule do
-    load_gql MyCoolApplication.MyAbsintheSchema, "query { some { cool { gql { id } }}}"
+    set_gql MyCoolApplication.MyAbsintheSchema, "query { some { cool { gql { id } }}}"
     # ...
   ```
   """
@@ -64,7 +64,7 @@ defmodule Wormwood.GQLCase do
   end
 
   @doc """
-  Call this macro in the module you've loaded a document into using `load_gql`
+  Call this macro in the module you've loaded a document into using `load_gql` or `set_gql`.
 
   Calling this will execute the document loaded into the module against the schema loaded in the module.
   It accepts a keyword list for `options` that are passed into [`Absinthe.run/3`](https://hexdocs.pm/absinthe/Absinthe.html#run/3).

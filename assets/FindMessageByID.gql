@@ -1,0 +1,7 @@
+#import "./MessageFields.frag.gql"
+
+query FindMessageByID($id : Int) {
+  message(id: $id) {
+    ...MessageFields
+  }
+}
