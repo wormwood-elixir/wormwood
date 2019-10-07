@@ -1,7 +1,7 @@
 # Wormwood
 
 [![hex](https://img.shields.io/hexpm/v/wormwood.svg)](https://hex.pm/packages/wormwood)
-[![Actions Status](https://github.com/tinfoil/wormwood/workflows/Elixir CI/badge.svg)](https://github.com/tinfoil/wormwood/actions)
+![Actions Status](https://github.com/tinfoil/wormwood/workflows/Elixir%20CI/badge.svg)
 [![license-mit](https://img.shields.io/badge/license-MIT-blue)](https://github.com/tinfoil/wormwood/blob/master/LICENSE)
 ![graph-ql](https://img.shields.io/badge/%E2%99%A5-graphql-ff69b4)
 
