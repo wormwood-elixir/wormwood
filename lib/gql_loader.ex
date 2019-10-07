@@ -1,16 +1,31 @@
 defmodule Wormwood.GQLLoader do
   @import_regex ~r"#import \"(.*)\""
 
-  @spec load_document(binary) :: binary
-  def load_document(document_path) when is_binary(document_path) do
+  @spec load_file(binary) :: binary
+  def load_file(document_path) when is_binary(document_path) do
     try_load_file(document_path)
       |> graphql_expand_imports(document_path)
       |> try_parse_document(document_path)
   end
 
-  @spec graphql_expand_imports(binary, binary) :: binary
+  @spec load_string(binary) :: binary
+  def load_string(query_string) when is_binary(query_string) do
+    graphql_expand_imports(query_string, File.cwd!)
+  end
+
   defp graphql_expand_imports(content, file_path) do
-    base_dir = Path.dirname(file_path)
+    Path.expand(file_path)
+    |> File.dir?()
+    |> case do
+      false ->
+        base_dir = Path.dirname(file_path)
+        do_import_expansion(content, base_dir, file_path)
+      true ->
+        do_import_expansion(content, file_path, file_path)
+    end
+  end
+
+  defp do_import_expansion(content, base_dir, file_path) do
     matches = Regex.scan(@import_regex, content)
     graphql_inject_import_matches(content, matches, base_dir, file_path)
   end

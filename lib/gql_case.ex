@@ -30,7 +30,33 @@ defmodule Wormwood.GQLCase do
         raise WormwoodSetupError, reason: :double_declaration
       end
 
-      document = GQLLoader.load_document(unquote(file_path))
+      document = GQLLoader.load_file(unquote(file_path))
+
+      Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
+      Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
+    end
+  end
+
+  @doc """
+  Call this macro in the module
+
+  It takes 2 arguments, the first is your Absinthe schema module, the second is a string of a GQL query or mutation.
+  This still supports imports, they will be resolved from the current working directory. (Most likely the top level of your app)
+
+  For example:
+  ```elixir
+  defmodule MyCoolApplication.MyModule do
+    load_gql MyCoolApplication.MyAbsintheSchema, "query { some { cool { gql { id } }}}"
+    # ...
+  ```
+  """
+  defmacro set_gql(schema, query_string) do
+    quote do
+      if Module.get_attribute(unquote(__CALLER__.module), :_wormwood_gql_query) != nil do
+        raise WormwoodSetupError, reason: :double_declaration
+      end
+
+      document = GQLLoader.load_string(unquote(query_string))
 
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
