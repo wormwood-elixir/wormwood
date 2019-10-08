@@ -23,7 +23,7 @@ Install from [Hex.pm](https://hex.pm/packages/wormwood):
 
 ```elixir
 def deps do
-  [{:wormwood, "~> 1.0.0"}]
+  [{:wormwood, "~> 0.1.0"}]
 end
 ```
 
