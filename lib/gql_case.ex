@@ -93,6 +93,24 @@ defmodule Wormwood.GQLCase do
     end
   end
 
+  @doc """
+  Call this macro in the module you've loaded a document into using `load_gql` or `set_gql`.
+
+  Calling this will execute the document loaded into the module against the schema loaded in the module.
+  Absinthe will use the phases in the "pipeline_phases" list argument when running.
+  It also accepts a keyword list for `options` that are passed into [`Absinthe.run/3`](https://hexdocs.pm/absinthe/Absinthe.html#run/3).
+
+  Please see the [Absinthe docs](https://hexdocs.pm/absinthe/Absinthe.html#run/3-options) for more information on the options that can be passed to this macro.
+
+  Returns a tuple of the query result from the [`Absinthe.Pipeline.run/2`](https://hexdocs.pm/absinthe/Absinthe.Pipeline.html#run/2) call.
+
+  For example:
+  ```elixir
+  pipeline = [Absinthe.Phase.Parse, Absinthe.Phase.Blueprint]
+  result = query_gql_with_pipeline(pipeline)
+  assert {:ok, %Absinthe.Blueprint{} = _blueprint, _pipeline} = result
+  ```
+  """
   defmacro query_gql_with_pipeline(pipeline_phases \\ [], options \\ []) do
     quote do
       if is_nil(@_wormwood_gql_query) do

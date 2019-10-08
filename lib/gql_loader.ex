@@ -1,6 +1,17 @@
 defmodule Wormwood.GQLLoader do
   @import_regex ~r"#import \"(.*)\""
 
+
+  @doc """
+  When provided a path to a GQL document, expands all import statements and attempts to parses it with Absinthe.
+
+  Returns the query string source with imports appended.
+
+  For example:
+  ```elixir
+  load_file!("assets/js/MyQuery.gql")
+  ```
+  """
   @spec load_file!(binary) :: binary
   def load_file!(document_path) when is_binary(document_path) do
     try_load_file(document_path)
@@ -8,6 +19,16 @@ defmodule Wormwood.GQLLoader do
       |> try_parse_document(document_path)
   end
 
+  @doc """
+  When provided the source code of a GQL document, expands all import statements and attempts to parses it with Absinthe.
+
+  Returns the query string source with imports appended.
+
+  For example:
+  ```elixir
+  load_string!(@my_query_source)
+  ```
+  """
   @spec load_string!(binary) :: binary
   def load_string!(query_string) when is_binary(query_string) do
     graphql_expand_imports(query_string, File.cwd!)
