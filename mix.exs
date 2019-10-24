@@ -4,7 +4,7 @@ defmodule Wormwood.MixProject do
   def project do
     [
       app: :wormwood,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -25,7 +25,7 @@ defmodule Wormwood.MixProject do
       extra_applications: [:logger]
     ]
   end
-  
+
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
