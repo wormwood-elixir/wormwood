@@ -31,7 +31,7 @@ defmodule Wormwood.MixProject do
 
   defp deps do
     [
-      {:absinthe, "~> 1.4"},
+      {:absinthe, "~> 1.5.0-rc.0"},
       {:excoveralls, "~> 0.10", only: :test},
       {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
     ]
