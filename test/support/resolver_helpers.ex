@@ -3,8 +3,10 @@ defmodule Wormwood.Examples.ResolverHelpers do
   alias Wormwood.Examples.StaticData
 
   def messages_mapped_to_user(_, _, _) do
-    messages = StaticData.messages
+    messages =
+      StaticData.messages()
       |> Enum.map(fn msg -> Map.put(msg, :from, get_user_by_id(msg.from)) end)
+
     {:ok, messages}
   end
 
@@ -23,14 +25,15 @@ defmodule Wormwood.Examples.ResolverHelpers do
   #####
 
   defp get_messages_from_user(id) do
-    StaticData.messages
-      |> Enum.filter(fn msg -> msg.from == id end)
+    StaticData.messages()
+    |> Enum.filter(fn msg -> msg.from == id end)
   end
 
   defp get_user_by_email(email) do
-    user = Enum.find(StaticData.users, fn user ->
-      user.email == email
-    end)
+    user =
+      Enum.find(StaticData.users(), fn user ->
+        user.email == email
+      end)
 
     case user do
       nil -> nil
@@ -44,9 +47,10 @@ defmodule Wormwood.Examples.ResolverHelpers do
   end
 
   defp get_user_by_id(id) do
-    user = Enum.find(StaticData.users, fn user ->
-      user.id == id
-    end)
+    user =
+      Enum.find(StaticData.users(), fn user ->
+        user.id == id
+      end)
 
     case user do
       nil -> nil
@@ -60,7 +64,7 @@ defmodule Wormwood.Examples.ResolverHelpers do
   end
 
   defp get_message_by_id(id) do
-    StaticData.messages
-      |> Enum.find(fn msg -> msg.id == id end)
+    StaticData.messages()
+    |> Enum.find(fn msg -> msg.id == id end)
   end
 end

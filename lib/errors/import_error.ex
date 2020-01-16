@@ -6,6 +6,8 @@ defmodule WormwoodImportError do
   defexception [:path, :parent]
 
   def message(exception) do
-    "Wormwood failed to load imported file '#{exception.path}' imported in file '#{exception.parent}'"
+    "Wormwood failed to load imported file '#{exception.path}' imported in file '#{
+      exception.parent
+    }'"
   end
 end
