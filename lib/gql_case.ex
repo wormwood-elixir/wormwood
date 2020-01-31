@@ -117,7 +117,8 @@ defmodule Wormwood.GQLCase do
         raise WormwoodSetupError, reason: :missing_declaration
       end
 
-      options_list = unquote(options)
+      options_list =
+        unquote(options)
         |> Keyword.put(:schema, @_wormwood_gql_schema)
         |> Absinthe.Pipeline.options()
 

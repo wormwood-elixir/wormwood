@@ -12,7 +12,12 @@ defmodule Wormwood.MixProject do
       description: description(),
       package: package(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       docs: [
         main: "readme",
         extras: ["README.md"]
@@ -50,7 +55,10 @@ defmodule Wormwood.MixProject do
       maintainers: ["Aaron Shea", "Tinfoil Security Inc."],
       licenses: ["MIT"],
       source_url: "https://github.com/tinfoil/wormwood",
-      links: %{"GitHub" => "https://github.com/tinfoil/wormwood", "Tinfoil Website" => "https://www.tinfoilsecurity.com/go/opensource"}
+      links: %{
+        "GitHub" => "https://github.com/tinfoil/wormwood",
+        "Tinfoil Website" => "https://www.tinfoilsecurity.com/go/opensource"
+      }
     ]
   end
 end

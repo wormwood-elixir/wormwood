@@ -2,7 +2,7 @@ defmodule Wormwood.Test.Examples.GetUsersTest do
   use ExUnit.Case
   use Wormwood.GQLCase
 
-  load_gql Wormwood.Examples.Schema, "assets/GetUsers.gql"
+  load_gql(Wormwood.Examples.Schema, "assets/GetUsers.gql")
 
   describe "GetUsers.gql" do
     test "Should return a list of all the users (all 5 of them)" do

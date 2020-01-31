@@ -2,7 +2,7 @@ defmodule Wormwood.Test.Examples.GetMessagesTest do
   use ExUnit.Case
   use Wormwood.GQLCase
 
-  load_gql Wormwood.Examples.Schema, "assets/GetMessages.gql"
+  load_gql(Wormwood.Examples.Schema, "assets/GetMessages.gql")
 
   describe "GetMessages.gql" do
     test "Should return a list of all the messages (all 10 of them)" do

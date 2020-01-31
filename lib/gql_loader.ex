@@ -1,7 +1,6 @@
 defmodule Wormwood.GQLLoader do
   @import_regex ~r"#import \"(.*)\""
 
-
   @doc """
   When provided a path to a GQL document, expands all import statements and attempts to parses it with Absinthe.
 
@@ -15,8 +14,8 @@ defmodule Wormwood.GQLLoader do
   @spec load_file!(binary) :: binary
   def load_file!(document_path) when is_binary(document_path) do
     try_load_file(document_path)
-      |> graphql_expand_imports(document_path)
-      |> try_parse_document(document_path)
+    |> graphql_expand_imports(document_path)
+    |> try_parse_document(document_path)
   end
 
   @doc """
@@ -31,7 +30,7 @@ defmodule Wormwood.GQLLoader do
   """
   @spec load_string!(binary) :: binary
   def load_string!(query_string) when is_binary(query_string) do
-    graphql_expand_imports(query_string, File.cwd!)
+    graphql_expand_imports(query_string, File.cwd!())
   end
 
   defp graphql_expand_imports(content, file_path) do
@@ -41,6 +40,7 @@ defmodule Wormwood.GQLLoader do
       false ->
         base_dir = Path.dirname(file_path)
         do_import_expansion(content, base_dir, file_path)
+
       true ->
         do_import_expansion(content, file_path, file_path)
     end
@@ -55,15 +55,18 @@ defmodule Wormwood.GQLLoader do
     case matches do
       [] ->
         content
+
       _ ->
         [_, import_path] = List.first(matches)
-        content_to_inject = Path.join(dir, import_path)
+
+        content_to_inject =
+          Path.join(dir, import_path)
           |> Path.expand()
           |> try_import_file(parent_file)
           |> graphql_expand_imports(import_path)
 
-        content <> content_to_inject
-          |> graphql_inject_import_matches(tl(matches), dir, parent_file)
+        (content <> content_to_inject)
+        |> graphql_inject_import_matches(tl(matches), dir, parent_file)
     end
   end
 
@@ -78,23 +81,27 @@ defmodule Wormwood.GQLLoader do
 
   defp try_load_file(path) do
     File.read(path)
-      |> case do
-        {:ok, file_content} ->
-          file_content
-        {:error, reason} ->
-          raise WormwoodLoaderError, path: path, reason: reason
-      end
+    |> case do
+      {:ok, file_content} ->
+        file_content
+
+      {:error, reason} ->
+        raise WormwoodLoaderError, path: path, reason: reason
+    end
   end
 
   defp try_parse_document(document, src_path) do
     case Absinthe.Phase.Parse.run(%Absinthe.Language.Source{body: document}) do
       {:ok, _blueprint} ->
         document
+
       {:error, blueprint} ->
-        error = blueprint.execution.validation_errors
+        error =
+          blueprint.execution.validation_errors
           |> List.first()
 
-        error_location = error.locations
+        error_location =
+          error.locations
           |> List.first()
           |> Map.get(:line)
 

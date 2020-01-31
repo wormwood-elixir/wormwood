@@ -12,7 +12,7 @@ defmodule Wormwood.Test.Examples.RunRawString do
   }
   """
 
-  set_gql Wormwood.Examples.Schema, @static_string
+  set_gql(Wormwood.Examples.Schema, @static_string)
 
   describe "raw string" do
     test "Should return a list of all the users (all 5 of them)" do
