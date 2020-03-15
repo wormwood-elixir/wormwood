@@ -102,7 +102,11 @@ defmodule Wormwood.GQLCase do
   defmacro query_gql_by(query_name, options \\ []) do
     quote do
       attribute =
-        unquote(__CALLER__.module).__info__(:attributes)[unquote(query_name)] |> List.last()
+        unquote(__CALLER__.module).__info__(:attributes)[unquote(query_name)]
+        |> case do
+          nil -> nil
+          list -> List.last(list)
+        end
 
       if is_nil(attribute) do
         raise WormwoodSetupError, reason: :missing_declaration
