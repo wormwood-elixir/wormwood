@@ -13,6 +13,33 @@ defmodule Wormwood.GQLCase do
   end
 
   @doc """
+  Call this macro in the module you wish to load your GQL documents in.
+
+  It takes 3 arguments, the first is the query_name that you want to query.
+
+  ```elixir
+   defmodule MyCoolApplication.MyModule do
+    load_gql :my_query, MyCoolApplication.MyAbsintheSchema, "assets/js/queries/MyQuery.gql"
+    # ...
+  ```
+
+  After you define the query name at up code, you can call the query with
+  ```elixir
+  result = query_gql_by(:my_query, variables: %{}, context: %{})
+  {:ok, query_data} = result
+  ```
+
+  """
+  defmacro load_gql(query_name, schema, file_path) when is_atom(query_name) do
+    quote do
+      document = GQLLoader.load_file!(unquote(file_path))
+      Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
+      Module.register_attribute(unquote(__CALLER__.module), unquote(query_name), persist: true)
+      Module.put_attribute(unquote(__CALLER__.module), unquote(query_name), document)
+    end
+  end
+
+  @doc """
   Call this macro in the module you wish to load your GQL document in.
 
   It takes 2 arguments, the first is your Absinthe schema module, the second is a path to a GQL file that contains a GraphQL query or mutation.
@@ -60,6 +87,36 @@ defmodule Wormwood.GQLCase do
 
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_query, document)
       Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
+    end
+  end
+
+  @doc """
+  Call this macro in the module you've loaded a document into using `load_gql/3`.
+
+  For example:
+  ```elixir
+  result = query_gql_by(:my_query, variables: %{}, context: %{})
+  {:ok, query_data} = result
+  ```
+  """
+  defmacro query_gql_by(query_name, options \\ []) do
+    quote do
+      attribute =
+        unquote(__CALLER__.module).__info__(:attributes)[unquote(query_name)]
+        |> case do
+          nil -> nil
+          list -> List.last(list)
+        end
+
+      if is_nil(attribute) do
+        raise WormwoodSetupError, reason: :missing_declaration
+      end
+
+      Absinthe.run(
+        attribute,
+        @_wormwood_gql_schema,
+        unquote(options)
+      )
     end
   end
 
