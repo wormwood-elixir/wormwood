@@ -67,6 +67,33 @@ defmodule Wormwood.GQLCase do
   @doc """
   Call this macro in the module where you want to query using a static string as your query.
 
+  It takes 3 arguments, the first is the query_name that you want to query, the second is your Absinthe schema module and
+  the third is a string of a GQL query or mutation.
+
+  ```elixir
+   defmodule MyCoolApplication.MyModule do
+    set_gql :my_query, MyCoolApplication.MyAbsintheSchema, "query { some { cool { gql { id } }}}"
+    # ...
+  ```
+
+  After you define the query name at up code, you can call the query with
+  ```elixir
+  result = query_gql_by(:my_query, variables: %{}, context: %{})
+  {:ok, query_data} = result
+  ```
+  """
+  defmacro set_gql(query_name, schema, query_string) when is_atom(query_name) do
+    quote do
+      document = GQLLoader.load_string!(unquote(query_string))
+      Module.put_attribute(unquote(__CALLER__.module), :_wormwood_gql_schema, unquote(schema))
+      Module.register_attribute(unquote(__CALLER__.module), unquote(query_name), persist: true)
+      Module.put_attribute(unquote(__CALLER__.module), unquote(query_name), document)
+    end
+  end
+
+  @doc """
+  Call this macro in the module where you want to query using a static string as your query.
+
   It takes 2 arguments, the first is your Absinthe schema module, the second is a string of a GQL query or mutation.
   This still supports imports, they will be resolved from the current working directory. (Most likely the top level of your app)
 
